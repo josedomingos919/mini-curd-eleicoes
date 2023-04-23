@@ -1,9 +1,12 @@
-import { Input, ListGroup, ListGroupItem } from "reactstrap";
+import { useMenuCNEState } from "./state";
+import { ListGroup, ListGroupItem } from "reactstrap";
 import { Logo, CardTitle, Button, MiniFooter } from "../../components";
 
 import * as S from "./styles";
 
 export const MenuCNE = () => {
+  const { handleLogout } = useMenuCNEState();
+
   return (
     <S.Container>
       <Logo />
@@ -31,7 +34,7 @@ export const MenuCNE = () => {
             </ListGroupItem>
           </ListGroup>
         </S.MenuList>
-        <Button title="Sair" />
+        <Button title="Sair" onClick={handleLogout} />
       </S.Form>
       <MiniFooter title="Aproveite, é simples e sempre será!" />
     </S.Container>

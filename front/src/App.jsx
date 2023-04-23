@@ -15,16 +15,23 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/menu-cne" element={<MenuCNE />} />
-        <Route path="/add-eleicoes" element={<AddEleicoes />} />
-        <Route path="/list-eleicoes" element={<ListEleicoes />} />
-        <Route path="/add-candidato" element={<AddCandidato />} />
-        <Route path="/list-candidato" element={<ListCandidato />} />
-        <Route path="/add-eleitor" element={<AddEleitor />} />
-        <Route path="/list-eleitor" element={<ListEleitor />} />
-
+        {user?.id ? (
+          <>
+            <Route path="/" element={<MenuCNE />} />
+            <Route path="/menu-cne" element={<MenuCNE />} />
+            <Route path="/add-eleicoes" element={<AddEleicoes />} />
+            <Route path="/list-eleicoes" element={<ListEleicoes />} />
+            <Route path="/add-candidato" element={<AddCandidato />} />
+            <Route path="/list-candidato" element={<ListCandidato />} />
+            <Route path="/add-eleitor" element={<AddEleitor />} />
+            <Route path="/list-eleitor" element={<ListEleitor />} />
+          </>
+        ) : (
+          <>
+            <Route path="/" element={<Login />} />
+            <Route path="/login" element={<Login />} />
+          </>
+        )}
         <Route path="*" element={"Página não encontrada"} />
       </Routes>
     </BrowserRouter>
