@@ -1,6 +1,8 @@
 export class AddUserDTO {
-  email: string;
-  name: string;
-  senha: string;
+  bi: string;
   tipo: string;
+  name: string;
+  phone: string;
+  senha: string;
+  apelido: string;
 }

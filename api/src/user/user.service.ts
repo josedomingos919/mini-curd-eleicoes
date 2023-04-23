@@ -10,32 +10,14 @@ export class UserService {
 
   async add(data: AddUserDTO) {
     const user = await this.prisma.usuario.create({
-      data: {
-        ...data,
-        Conta: {
-          create: [
-            {
-              saldo: 0,
-            },
-          ],
-        },
-      },
-      include: {
-        Conta: true,
-        Despesa: true,
-      },
+      data,
     });
 
     return user;
   }
 
   async getAll() {
-    const users = await this.prisma.usuario.findMany({
-      include: {
-        Conta: true,
-        Despesa: true,
-      },
-    });
+    const users = await this.prisma.usuario.findMany({});
 
     return users;
   }
@@ -48,10 +30,6 @@ export class UserService {
         id: data.id,
       },
       data,
-      include: {
-        Conta: true,
-        Despesa: true,
-      },
     });
 
     return user;
@@ -61,10 +39,6 @@ export class UserService {
     const user = await this.prisma.usuario.findUnique({
       where: {
         id,
-      },
-      include: {
-        Conta: true,
-        Despesa: true,
       },
     });
 
@@ -76,10 +50,6 @@ export class UserService {
       where: {
         id,
       },
-      include: {
-        Conta: true,
-        Despesa: true,
-      },
     });
 
     return user;
@@ -88,12 +58,8 @@ export class UserService {
   async login(data: LoginDTO) {
     const user = await this.prisma.usuario.findFirst({
       where: {
-        email: data.email,
+        phone: data.phone,
         senha: data.password,
-      },
-      include: {
-        Conta: true,
-        Despesa: true,
       },
     });
 

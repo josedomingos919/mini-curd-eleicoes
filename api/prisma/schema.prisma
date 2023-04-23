@@ -14,3 +14,56 @@ model Usuario {
   senha String
   tipo  String
 }
+
+model Eleitor {
+  id             Int              @id @default(autoincrement())
+  nome           String
+  sobrenome      String
+  eleicaoEleitor EleicaoEleitor[]
+  voto           Voto[]
+}
+
+model Candidato {
+  id               Int                @id @default(autoincrement())
+  nome             String
+  sobrenome        String
+  eleicaoCandidato EleicaoCandidato[]
+  voto             Voto[]
+}
+
+model Eleicao {
+  id         Int                @id @default(autoincrement())
+  tipo       String
+  votos      Voto[]
+  candidatos EleicaoCandidato[]
+  eleitores  EleicaoEleitor[]
+  finshed    Int                @default(0)
+}
+
+model EleicaoCandidato {
+  id          Int       @id @default(autoincrement())
+  candidatoId Int
+  candidato   Candidato @relation(fields: [candidatoId], references: [id])
+  eleicao     Eleicao   @relation(fields: [eleicaoId], references: [id])
+  eleicaoId   Int
+}
+
+model EleicaoEleitor {
+  id        Int     @id @default(autoincrement())
+  eleitorId Int
+  eleitor   Eleitor @relation(fields: [eleitorId], references: [id])
+  eleicao   Eleicao @relation(fields: [eleicaoId], references: [id])
+  eleicaoId Int
+}
+
+model Voto {
+  id          Int       @id @default(autoincrement())
+  eleicaoId   Int
+  eleicao     Eleicao   @relation(fields: [eleicaoId], references: [id])
+  eleitor     Eleitor   @relation(fields: [eleitorId], references: [id])
+  eleitorId   Int
+  candidato   Candidato @relation(fields: [candidatoId], references: [id])
+  candidatoId Int
+
+  @@unique([eleitorId, eleicaoId])
+}
