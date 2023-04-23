@@ -5,13 +5,13 @@ import { Logo, CardTitle, Button, MiniFooter } from "../../components";
 import * as S from "./styles";
 
 export const AddEleitor = () => {
-  const { bi, nome, sobrenome, handleSave } = useAddEleitor();
+  const { id, bi, nome, sobrenome, handleSave, handleEdit } = useAddEleitor();
 
   return (
     <S.Container>
       <Logo />
       <S.Form>
-        <CardTitle title="Criar Eleitor" />
+        <CardTitle title={id ? "Editar " : "Criar " + "Eleitor"} />
         <S.ElementContainer>
           <label>Nome:</label>
           <Input
@@ -34,7 +34,7 @@ export const AddEleitor = () => {
           />
         </S.ElementContainer>
         <S.Footer>
-          <Button title="Salvar" onClick={handleSave} />
+          <Button title="Salvar" onClick={id ? handleEdit : handleSave} />
           <Button title="Voltar" onClick={() => history.go(-1)} />
         </S.Footer>
       </S.Form>

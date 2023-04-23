@@ -1,7 +1,11 @@
+import { useParams } from "react-router-dom";
 import { useAppState } from "../../hooks/useAppState";
 import { voterService } from "../../services";
+import { useEffect } from "react";
 
 export const useAddEleitor = () => {
+  const { id } = useParams();
+
   const bi = useAppState();
   const nome = useAppState();
   const sobrenome = useAppState();
@@ -43,5 +47,40 @@ export const useAddEleitor = () => {
     }
   };
 
-  return { bi, nome, sobrenome, handleSave };
+  const handleEdit = async () => {
+    if (!isValidForm()) return;
+
+    const response = await voterService.update({
+      id,
+      bi: bi?.value,
+      nome: nome?.value,
+      sobrenome: sobrenome?.value,
+    });
+
+    if (response?.status == 200) {
+      alert("Eleitor atualizado com sucesso!");
+
+      history.go(-1);
+    } else {
+      alert("Erro: Falha ao atualizar o eleitor, tente novamente mais atarde!");
+    }
+  };
+
+  const getEditUser = async () => {
+    const response = await voterService.getOne(id);
+
+    if (response?.status == 200) {
+      const voter = response?.data;
+
+      bi.setValue(voter?.bi);
+      nome.setValue(voter?.nome);
+      sobrenome.setValue(voter?.sobrenome);
+    }
+  };
+
+  useEffect(() => {
+    if (id) getEditUser();
+  }, [id]);
+
+  return { id, bi, nome, sobrenome, handleSave, handleEdit };
 };
