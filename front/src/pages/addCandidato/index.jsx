@@ -1,34 +1,41 @@
-import { Logo, CardTitle, Button, MiniFooter } from "../../components";
 import { Input } from "reactstrap";
+import { useAddCandidato } from "./state";
+import { Logo, CardTitle, Button, MiniFooter } from "../../components";
 
 import * as S from "./styles";
 
-import Select from "react-select";
-
 export const AddCandidato = () => {
+  const { id, bi, nome, sobrenome, handleSave, handleEdit } = useAddCandidato();
+
   return (
     <S.Container>
       <Logo />
       <S.Form>
-        <CardTitle title="Criar Candidato" />
+        <CardTitle title={id ? "Editar " : "Criar " + "Candidato"} />
         <S.ElementContainer>
           <label>Nome:</label>
-          <Input />
+          <Input
+            value={nome.value}
+            onChange={(e) => nome.setValue(e.target.value)}
+          />
         </S.ElementContainer>
         <S.ElementContainer>
           <label>Apelido:</label>
-          <Input />
+          <Input
+            value={sobrenome.value}
+            onChange={(e) => sobrenome.setValue(e.target.value)}
+          />
         </S.ElementContainer>
         <S.ElementContainer>
           <label>BI:</label>
-          <Input />
+          <Input
+            value={bi.value}
+            onChange={(e) => bi.setValue(e.target.value)}
+          />
         </S.ElementContainer>
         <S.Footer>
-          <Button title="Salvar" />
-          <Button
-            title="Voltar"
-            onClick={() => (location.href = "/menu-cne")}
-          />
+          <Button title="Salvar" onClick={id ? handleEdit : handleSave} />
+          <Button title="Voltar" onClick={() => history.go(-1)} />
         </S.Footer>
       </S.Form>
       <MiniFooter title="Aproveite, é simples e sempre será!" />

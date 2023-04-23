@@ -26,6 +26,7 @@ function App() {
             <Route path="/add-eleitor" element={<AddEleitor />} />
             <Route path="/list-eleitor" element={<ListEleitor />} />
             <Route path="/edit-eleitor/:id" element={<AddEleitor />} />
+            <Route path="/edit-candidato/:id" element={<AddCandidato />} />
           </>
         ) : (
           <>
