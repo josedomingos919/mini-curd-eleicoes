@@ -5,7 +5,7 @@ import { Logo, CardTitle, Button, MiniFooter } from "../../components";
 import * as S from "./styles";
 
 export const ListEleitor = () => {
-  const { voters, handleDelete } = useListEleitor();
+  const { voters, handleDelete, navigate } = useListEleitor();
 
   return (
     <S.Container>
@@ -47,7 +47,11 @@ export const ListEleitor = () => {
                     </RAButton>
                   </td>
                   <td>
-                    <RAButton>Editar</RAButton>
+                    <RAButton
+                      onClick={() => navigate(`/edit-eleitor/${voter?.id}`)}
+                    >
+                      Editar
+                    </RAButton>
                   </td>
                 </tr>
               );

@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import { useAppState } from "../../hooks/useAppState";
 import { voterService } from "../../services";
+import { useNavigate } from "react-router-dom";
 
 export const useListEleitor = () => {
   const voters = useAppState([]);
+
+  const navigate = useNavigate();
 
   const getVoters = async () => {
     const response = await voterService.getAll();
@@ -29,5 +32,5 @@ export const useListEleitor = () => {
     getVoters();
   }, []);
 
-  return { voters, handleDelete };
+  return { voters, handleDelete, navigate };
 };
