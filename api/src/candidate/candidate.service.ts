@@ -5,13 +5,17 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class CandidateService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async add(data: AddCandidateDto) {
     const voter = await this.prisma.candidato.create({
       data,
     });
 
+    await this.prisma.eleitor.create({
+      data,
+    }
+    )
     return voter;
   }
 
