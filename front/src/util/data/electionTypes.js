@@ -8,7 +8,7 @@ export const electionTypes = [
     value: "EG",
   },
   {
-    label: "Eleições Altárticas",
+    label: "Eleições Alturticas",
     value: "EA",
   },
 ];

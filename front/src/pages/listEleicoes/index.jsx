@@ -2,8 +2,25 @@ import { Input, Table, Button as RAButton } from "reactstrap";
 import { Logo, CardTitle, Button, MiniFooter } from "../../components";
 
 import * as S from "./styles";
+import { useEffect, useState } from "react";
+import { electionService } from "../../services";
+import { electionTypes } from "../../util/data/electionTypes";
 
 export const ListEleicoes = () => {
+  const [elecoes, setElecoes] = useState([]);
+
+  const init = async () => {
+    const response = await electionService.getAll();
+
+    setElecoes(response?.data || []);
+  };
+
+  console.log({ elecoes });
+
+  useEffect(() => {
+    init();
+  }, []);
+
   return (
     <S.Container>
       <Logo />
@@ -20,45 +37,21 @@ export const ListEleicoes = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>
-                <a href="">vizualizar</a>
-              </td>
-              <td>
-                <a href="">vizualizar</a>
-              </td>
-              <td>
-                <RAButton color="danger">Encerrar</RAButton>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>
-                <a href="">vizualizar</a>
-              </td>
-              <td>
-                <a href="">vizualizar</a>
-              </td>
-              <td>
-                <RAButton color="danger">Encerrar</RAButton>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>
-                <a href="">vizualizar</a>
-              </td>
-              <td>
-                <a href="">vizualizar</a>
-              </td>
-              <td>
-                <RAButton color="danger">Encerrar</RAButton>
-              </td>
-            </tr>
+            {elecoes.map((e) => (
+              <tr>
+                <td>{e?.id}</td>
+                <td>{electionTypes.find((k) => k.value == e?.tipo)?.label}</td>
+                <td>
+                  <a href="">vizualizar</a>
+                </td>
+                <td>
+                  <a href="">vizualizar</a>
+                </td>
+                <td>
+                  <RAButton color="danger">Encerrar</RAButton>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
         <Button title="Voltar" onClick={() => history.go(-1)} />

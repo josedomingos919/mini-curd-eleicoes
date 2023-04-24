@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useAppState } from "../../hooks/useAppState";
-import { candidateService, voterService } from "../../services";
+import {
+  candidateService,
+  electionService,
+  voterService,
+} from "../../services";
 
 export const useAddEleicoes = () => {
   const tipo = useAppState();
@@ -37,9 +41,43 @@ export const useAddEleicoes = () => {
     }
   };
 
-  const isValidForm = () => {};
+  const isValidForm = () => {
+    if (!tipo?.value?.value) {
+      alert("Campo tipo é obrigatório!");
+      return false;
+    }
 
-  const handleSave = async () => {};
+    if (!candidatos?.value?.length) {
+      alert("Campo candidatos é obrigatório!");
+      return false;
+    }
+
+    if (!eleitores?.value?.length) {
+      alert("Campo eleitores é obrigatório!");
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSave = async () => {
+    if (!isValidForm()) return;
+
+    const response = await electionService.add({
+      finshed: 0,
+      tipo: tipo?.value?.value,
+      eleitor: eleitores.value.map((e) => ({ eleitorId: e.value })),
+      candidatos: candidatos.value.map((e) => ({ candidatoId: e.value })),
+    });
+
+    if (response?.status == 201) {
+      alert("Eleição criada com sucesso!");
+
+      history.go(-1);
+    } else {
+      alert("Falha ao criar a elição!");
+    }
+  };
 
   useEffect(() => {
     getAllElitores();
