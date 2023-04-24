@@ -4,7 +4,7 @@ import { ElectionController } from './election.controller';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Module({
-    controllers: [ElectionController],
-    providers: [ElectionService, PrismaService],
+  controllers: [ElectionController],
+  providers: [ElectionService, PrismaService],
 })
-export class ElectionModule { }
+export class ElectionModule {}
