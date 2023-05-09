@@ -14,7 +14,7 @@ import { UpdateCandidateDto } from './dto/updateCandidateDto';
 
 @Controller('candidate')
 export class CandidateController {
-  constructor(private voterService: CandidateService) {}
+  constructor(private voterService: CandidateService) { }
 
   @Post()
   add(@Body() data: AddCandidateDto) {
@@ -39,5 +39,10 @@ export class CandidateController {
   @Get()
   getAll() {
     return this.voterService.getAll();
+  }
+
+  @Get('eleicao/:id')
+  getByEleicao(@Param('id', ParseIntPipe) id: number) {
+    return this.voterService.getByEleicao(id);
   }
 }

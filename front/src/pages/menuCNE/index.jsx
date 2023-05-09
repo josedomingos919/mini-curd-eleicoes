@@ -32,6 +32,9 @@ export const MenuCNE = () => {
             <ListGroupItem>
               <a href="/list-eleitor">Listar Eleitores</a>
             </ListGroupItem>
+            <ListGroupItem>
+              <a href="/add-votos">Registra Votos</a>
+            </ListGroupItem>
           </ListGroup>
         </S.MenuList>
         <Button title="Sair" onClick={handleLogout} />

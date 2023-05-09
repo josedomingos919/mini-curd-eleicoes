@@ -13,11 +13,16 @@ import { AddElectionDto } from './dto/addElectionDto';
 
 @Controller('election')
 export class ElectionController {
-  constructor(private electionService: ElectionService) {}
+  constructor(private electionService: ElectionService) { }
 
   @Post()
   add(@Body() data: AddElectionDto) {
     return this.electionService.add(data);
+  }
+
+  @Post('finish/:id')
+  finish(@Param('id', ParseIntPipe) id: number) {
+    return this.electionService.finish(id)
   }
 
   @Delete(':id')

@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class VoterService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async add(data: AddVoterDto) {
     const voter = await this.prisma.eleitor.create({
@@ -26,6 +26,21 @@ export class VoterService {
     });
 
     return voter;
+  }
+
+
+  async getByEleicao(id: number) {
+    const response = await this.prisma.eleitor.findMany({
+      where: {
+        eleicaoEleitor: {
+          some: {
+            eleicaoId: id
+          }
+        }
+      },
+    });
+
+    return response;
   }
 
   async remove(id: number) {

@@ -19,6 +19,21 @@ export class CandidateService {
     return voter;
   }
 
+
+  async getByEleicao(id: number) {
+    const response = await this.prisma.candidato.findMany({
+      where: {
+        eleicaoCandidato: {
+          some: {
+            eleicaoId: id
+          }
+        }
+      },
+    });
+
+    return response;
+  }
+
   async update(data: UpdateCandidateDto) {
     data.id = Number(data?.id);
 
