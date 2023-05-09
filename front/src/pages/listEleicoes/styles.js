@@ -11,6 +11,7 @@ export const Container = styled.div`
 `;
 
 export const Form = styled.div`
+  overflow-x: auto;
   margin-top: 40px;
   border-radius: 25px;
   background-color: #fef38e;
