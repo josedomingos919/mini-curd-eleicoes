@@ -1,10 +1,21 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { AddElectionDto } from './dto/addElectionDto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ElectionService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
+
+  async finish(id: number) {
+    const response = await this.prisma.eleicao.update({
+      where: { id },
+      data: {
+        finshed: 1
+      }
+    })
+
+    return response
+  }
 
   async add(data: AddElectionDto) {
     const eleicao = await this.prisma.eleicao.create({

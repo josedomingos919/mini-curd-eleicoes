@@ -35,3 +35,17 @@ export const getAll = async () => {
     return error.response;
   }
 };
+
+
+export const finish = async (id) => {
+  try {
+    const response = axios.post(`${apiUrl}election/finish/${id}`);
+
+    return response;
+  } catch (error) {
+    console.log(error);
+
+    return error.response;
+  }
+};
+

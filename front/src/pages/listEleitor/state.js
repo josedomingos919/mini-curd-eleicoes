@@ -1,17 +1,24 @@
 import { useEffect } from "react";
 import { useAppState } from "../../hooks/useAppState";
 import { voterService } from "../../services";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const useListEleitor = () => {
+  const { id } = useParams();
   const voters = useAppState([]);
 
   const navigate = useNavigate();
 
   const getVoters = async () => {
-    const response = await voterService.getAll();
+    if (id) {
+      const response = await voterService.getByEleicao(id);
 
-    if (response?.status == 200) voters.setValue(response?.data);
+      if (response?.status == 200) voters.setValue(response?.data);
+    } else {
+      const response = await voterService.getAll();
+
+      if (response?.status == 200) voters.setValue(response?.data);
+    }
   };
 
   const handleDelete = async (id) => {

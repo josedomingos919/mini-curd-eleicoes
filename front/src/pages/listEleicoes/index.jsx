@@ -1,25 +1,12 @@
-import { Input, Table, Button as RAButton } from "reactstrap";
+import { useListEleicoes } from "./state";
+import { Table, Button as RAButton } from "reactstrap";
+import { electionTypes } from "../../util/data/electionTypes";
 import { Logo, CardTitle, Button, MiniFooter } from "../../components";
 
 import * as S from "./styles";
-import { useEffect, useState } from "react";
-import { electionService } from "../../services";
-import { electionTypes } from "../../util/data/electionTypes";
 
 export const ListEleicoes = () => {
-  const [elecoes, setElecoes] = useState([]);
-
-  const init = async () => {
-    const response = await electionService.getAll();
-
-    setElecoes(response?.data || []);
-  };
-
-  console.log({ elecoes });
-
-  useEffect(() => {
-    init();
-  }, []);
+  const { elecoes, handleFinish } = useListEleicoes();
 
   return (
     <S.Container>
@@ -42,13 +29,24 @@ export const ListEleicoes = () => {
                 <td>{e?.id}</td>
                 <td>{electionTypes.find((k) => k.value == e?.tipo)?.label}</td>
                 <td>
-                  <a href="">vizualizar</a>
+                  <a href={`/list-candidato/${e?.id}`}>vizualizar</a>
                 </td>
                 <td>
-                  <a href="">vizualizar</a>
+                  <a href={`/list-eleitor/${e?.id}`}>vizualizar</a>
                 </td>
                 <td>
-                  <RAButton color="danger">Encerrar</RAButton>
+                  {e?.finshed == 0 ? (
+                    <RAButton
+                      onClick={() => {
+                        handleFinish(e?.id);
+                      }}
+                      color="danger"
+                    >
+                      Encerrar
+                    </RAButton>
+                  ) : (
+                    <a href="">Vencedor</a>
+                  )}
                 </td>
               </tr>
             ))}

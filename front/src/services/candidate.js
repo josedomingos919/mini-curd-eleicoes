@@ -66,3 +66,15 @@ export const getAll = async () => {
     return error.response;
   }
 };
+
+export const getByEleicao = async (id) => {
+  try {
+    const response = axios.get(`${apiUrl}candidate/eleicao/${id}`);
+
+    return response;
+  } catch (error) {
+    console.log(error);
+
+    return error.response;
+  }
+};
