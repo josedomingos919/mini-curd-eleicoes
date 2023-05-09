@@ -1,4 +1,3 @@
-
 import { useListEleicoes } from "./state";
 import { Table, Button as RAButton } from "reactstrap";
 import { electionTypes } from "../../util/data/electionTypes";
@@ -36,11 +35,18 @@ export const ListEleicoes = () => {
                   <a href={`/list-eleitor/${e?.id}`}>vizualizar</a>
                 </td>
                 <td>
-                  {e?.finshed == 0 ? <RAButton onClick={() => {
-                    handleFinish(e?.id)
-                  }} color="danger">Encerrar</RAButton> :
+                  {e?.finshed == 0 ? (
+                    <RAButton
+                      onClick={() => {
+                        handleFinish(e?.id);
+                      }}
+                      color="danger"
+                    >
+                      Encerrar
+                    </RAButton>
+                  ) : (
                     <a href="">Vencedor</a>
-                  }
+                  )}
                 </td>
               </tr>
             ))}

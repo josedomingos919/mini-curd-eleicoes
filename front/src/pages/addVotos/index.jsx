@@ -1,3 +1,4 @@
+import { Input } from "reactstrap";
 import { Logo, CardTitle, Button, MiniFooter } from "../../components";
 import { electionTypes } from "../../util/data/electionTypes";
 import { useAddVotos } from "./state";
@@ -22,13 +23,8 @@ export const AddVotos = () => {
       <S.Form>
         <CardTitle title="Registrar Voto" />
         <S.ElementContainer>
-          <label>Eleição:</label>
-          <Select
-            options={electionTypes}
-            value={tipo.value}
-            onChange={tipo.setValue}
-            placeholder=""
-          />
+          <label>Nº Eleição:</label>
+          <Input type="number" />
         </S.ElementContainer>
         <S.ElementContainer>
           <label>Candidato:</label>
